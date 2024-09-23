@@ -6,7 +6,7 @@ set -o pipefail
 
 # Azure CLI
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-curl -fsSL https://aka.ms/install-azd.sh >install-azd.sh| sudo bash
+curl -fsSL https://aka.ms/install-azd.sh | sudo bash
 # Install Azure CLI Extensions without prompt
 az config set extension.use_dynamic_install=yes_without_prompt
 
@@ -47,5 +47,3 @@ npm install -g azurite
 Write-Host "Installing Angular - 6/6" -ForegroundColor yellow
 npx @angular/cli@latest analytics off
 npm i -g @angular/cli
-
-HEabBs#012023
