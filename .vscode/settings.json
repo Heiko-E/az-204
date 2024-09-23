@@ -1,7 +1,6 @@
 {
   "workbench.startupEditor": "none",
   "git.enableSmartCommit": true,
-  "window.zoomLevel": 2,
   "problems.autoReveal": false,
   "workbench.editor.enablePreview": false,
   "editor.wordWrap": "on",
@@ -10,7 +9,7 @@
   "problems.decorations.enabled": false,
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  "explorer.openEditors.visible": 0,
+  "explorer.openEditors.visible": 1,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "emmet.triggerExpansionOnTab": true,
   "workbench.editor.restoreViewState": false,
@@ -51,5 +50,6 @@
   "yaml.schemaStore.enable": false,
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
-  }
+  },
+  "dotnet.defaultSolution": "disable"
 }
