@@ -12,7 +12,7 @@ public class Program
     private const string storageAccountName = "mediastorheiko";
 
     //Update the storageAccountKey value that you recorded previously in this lab.
-    private const string storageAccountKey = "";    
+    private const string storageAccountKey = "<Storage Account Key>";    
 
     private static async Task EnumerateContainersAsync(BlobServiceClient client)
     {   
