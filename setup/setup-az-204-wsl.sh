@@ -47,3 +47,14 @@ npm install -g azurite
 Write-Host "Installing Angular - 6/6" -ForegroundColor yellow
 npx @angular/cli@latest analytics off
 npm i -g @angular/cli
+
+
+env=dev
+loc=eastus
+grp=thisgrps
+acct=food-cosmos-$env
+dbname=fooddb-$env
+
+az group create --name $grp --location $loc
+az cosmosdb create --name $acct --kind GlobalDocumentDB -g $grp
+ 
