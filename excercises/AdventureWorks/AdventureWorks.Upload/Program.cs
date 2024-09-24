@@ -11,12 +11,12 @@
 
     public class Program
     {
-        private const string EndpointUrl = "https://polycosmosheiko2.blob.core.windows.net/images";
+        private const string EndpointUrl = "https://polycosmosheiko2.documents.azure.com:443/";
         private const string AuthorizationKey = "";
         private const string DatabaseName = "Retail";
         private const string ContainerName = "Online";
         private const string PartitionKey = "/Category";
-        private const string JsonFilePath = ".\\models.json";
+        private const string JsonFilePath = "C:\\Users\\Student\\az-204\\excercises\\AdventureWorks\\AdventureWorks.Upload\\models.json";
 
         static private int amountToInsert;
         static List<Model> models;
