@@ -1,4 +1,5 @@
 {
+  "git.ignoreLimitWarning": true,
   "workbench.startupEditor": "none",
   "git.enableSmartCommit": true,
   "problems.autoReveal": false,
