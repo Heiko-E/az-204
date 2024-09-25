@@ -1,0 +1,4 @@
+Application (client) ID: fe1fc1a9-0cde-4815-b658-1d0ba17f4b4f
+Directory (tenant) ID: 69ab0b3c-79e0-47b5-8627-fe4e796c22a9
+
+user principal name (UPN): aad_lab_user1@hegerterposteo.onmicrosoft.com
