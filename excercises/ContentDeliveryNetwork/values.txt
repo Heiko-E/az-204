@@ -1,0 +1,14 @@
+Default Domain: landingpageheiko-cmg6bzdzdeg0feb9.eastus-01.azurewebsites.net
+
+azure-cli 2.64.0
+
+media: https://contenthostheiko.blob.core.windows.net/media
+video: https://contenthostheiko.blob.core.windows.net/video
+
+cdn media: https://cdnmediaheiko.azureedge.net
+cdn video: https://cdnvideoheiko.azureedge.net
+
+https://cdnmediaheiko.azureedge.net/campus.jpg
+https://cdnmediaheiko.azureedge.net/conference.jpg
+https://cdnmediaheiko.azureedge.net/poster.jpg
+https://cdnvideoheiko.azureedge.net/welcome.mp4
