@@ -1,0 +1,5 @@
+INSTRUMENTATION KEY: 6edd33ba-4c87-4126-b58d-557a13889480
+
+APPLICATIONINSIGHTS_CONNECTION_STRING: InstrumentationKey=6edd33ba-4c87-4126-b58d-557a13889480;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=80b4cd5f-2723-4b74-8597-07fce13d18ef
+
+App URL: http://smpapiheiko-c6axfjbkdhfma8br.eastus-01.azurewebsites.net/
