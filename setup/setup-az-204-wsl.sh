@@ -23,15 +23,14 @@ install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 # Node js
 sudo apt-get install nodejs
 sudo apt-get install npm 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+curl -o https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 
 # dotnet
 wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 dpkg -i packages-microsoft-prod.deb
 rm packages-microsoft-prod.deb
-apt-get update
-apt-get install -y dotnet-sdk-8.0
-sudo apt-get install -y dotnet-runtime-8.0
+sudo apt-get update
+sudo apt-get install -y dotnet-sdk-8.0  dotnet-runtime-8.0
 # Install httprepl
 dotnet tool install -g Microsoft.dotnet-httprepl
 # Set NuGet Source
