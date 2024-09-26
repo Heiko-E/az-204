@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_smpapiheiko_name": {
+            "value": null
+        },
+        "components_instrmheiko_name": {
+            "value": null
+        },
+        "autoscalesettings_ComputeScaler_name": {
+            "value": null
+        },
+        "serverfarms_ASP_MonitoredAssets_8d4d_name": {
+            "value": null
+        },
+        "actionGroups_Application_Insights_Smart_Detection_name": {
+            "value": null
+        },
+        "workspaces_DefaultWorkspace_ad1dacab_cce6_4744_b26c_4686da31e64b_EUS_externalid": {
+            "value": null
+        }
+    }
+}
