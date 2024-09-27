@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/c:/Users/AlexanderKastil/AppData/Roaming/Code/User/workspaceStorage/90ba5bb063f5ebf33decf8c3be43cb6f/ms-dotnettools.csdevkit/food-order-service.sln",
+                "${workspaceFolder}/c:/Users/AlexanderKastil/AppData/Roaming/Code/User/workspaceStorage/203f64acb1d1117fb3e933ae7a580ec8/ms-dotnettools.csdevkit/send-events-console.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/c:/Users/AlexanderKastil/AppData/Roaming/Code/User/workspaceStorage/90ba5bb063f5ebf33decf8c3be43cb6f/ms-dotnettools.csdevkit/food-order-service.sln",
+                "${workspaceFolder}/c:/Users/AlexanderKastil/AppData/Roaming/Code/User/workspaceStorage/203f64acb1d1117fb3e933ae7a580ec8/ms-dotnettools.csdevkit/send-events-console.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/c:/Users/AlexanderKastil/AppData/Roaming/Code/User/workspaceStorage/90ba5bb063f5ebf33decf8c3be43cb6f/ms-dotnettools.csdevkit/food-order-service.sln"
+                "${workspaceFolder}/c:/Users/AlexanderKastil/AppData/Roaming/Code/User/workspaceStorage/203f64acb1d1117fb3e933ae7a580ec8/ms-dotnettools.csdevkit/send-events-console.sln"
             ],
             "problemMatcher": "$msCompile"
         }
