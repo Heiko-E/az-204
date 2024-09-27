@@ -1,0 +1,3 @@
+Default Domain: eventviewerheiko-d7bbe9ddcvahfuhv.eastus-01.azurewebsites.net
+Topic Endpoint: https://hrtopicheiko.eastus-1.eventgrid.azure.net/api/events
+Acces Key1: 
