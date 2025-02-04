@@ -7,8 +7,8 @@ ARG DockerGID=${CONTAINER_GID}
 ARG DockerPW=docker
 
 # pre configure tzdata
-ENV TZ=Europe/Berlin
-RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && \
+    echo $CONTAINER_TIMEZONE > /etc/timezone
 # To support cntlm proxy add following lines to ~/.docker/config.json
 # proxies": {
 #     "default": {
@@ -65,11 +65,12 @@ RUN dotnet tool install -g Microsoft.dotnet-httprepl
 #&& dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
 
 # NVM
+ENV NODE_VERSION=16.15.0
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 
 # Node js
-RUN nvm install 16.15.0 \
-    && nvm use 16.15.0
+# RUN nvm install 16.15.0
+# RUN nvm use 16.15.0
 
 # Install Angular
 RUN npm install -g @angular/cli
