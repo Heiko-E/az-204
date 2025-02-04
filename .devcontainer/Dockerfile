@@ -6,11 +6,19 @@ ARG DockerUID=${CONTAINER_UID}
 ARG DockerGID=${CONTAINER_GID}
 ARG DockerPW=docker
 
-# ENV HTTP_PROXY http://127.0.0.1:3128
-# ENV HTTPS_PROXY http://127.0.0.1:3128
+# pre configure tzdata
+ENV TZ=Europe/Berlin
+RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
+# To support cntlm proxy add following lines to ~/.docker/config.json
+# proxies": {
+#     "default": {
+#         "httpProxy": "http://127.0.0.1:3128",
+#         "httpsProxy": "http://127.0.0.1:3128",
+#         "noProxy": "localhost,127.0.0.1"
+#     }
+# }
 
-RUN apt-get update
-RUN apt-get install -y\
+RUN apt-get update && apt-get install -y\
     curl \
     zip \
     tree \
@@ -23,7 +31,6 @@ RUN apt-get install -y\
     gnupg \
     lsb-release \
     libssl-dev \
-    apt-get install -y \
     ca-certificates \
     apt-transport-https \
     cargo \
@@ -44,40 +51,39 @@ RUN curl -sSL -O https://packages.microsoft.com/config/ubuntu/20.04/packages-mic
     && rm packages-microsoft-prod.deb
 
 # Azure CLI
-RUN apt-get update && apt-get install -y --fix-missing \
-    azure-cli \
-    dotnet-runtime-8.0
-
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+RUN az config set extension.use_dynamic_install=yes_without_prompt
 # Setting REQUESTS_CA_BUNDLE environment variable for az login command behind a proxy
 RUN export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 
 # .NET
-RUN dotnet tool install -g Microsoft.dotnet-httprepl \ 
-    && dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+RUN apt-get update && apt-get install -y --fix-missing \
+    dotnet-runtime-8.0 \
+    dotnet-sdk-6.0
+
+RUN dotnet tool install -g Microsoft.dotnet-httprepl
+#&& dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+
+# NVM
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 
 # Node js
-RUN npm install && npm run build
-RUN curl -Lo https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-
-# Azurite Storage Emulator & Function Core Tools v4
 RUN nvm install 16.15.0 \
-    && nvm use 16.15.0 \
-    && npm install -g azure-functions-core-tools@4 --unsafe-perm true --force \
-    && npm install -g azurite
+    && nvm use 16.15.0
 
 # Install Angular
-RUN npx @angular/cli@latest analytics off \
-    && npm i -g @angular/cli
+RUN npm install -g @angular/cli
+
+# Azurite Storage Emulator & Function Core Tools v4
+RUN npm install -g azure-functions-core-tools@4 --unsafe-perm true --force \
+    && npm install -g azurite
 
 # Installing K3D for local Kubernetes development
-RUN curl -s "https://raw.githubusercontent.com/rancher/k3d/main/install.sh" | sudo bash
+RUN curl -s "https://raw.githubusercontent.com/rancher/k3d/main/install.sh" | bash
 
 # Kubernetes CLI
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
     && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-
-# Install Azure CLI Extensions without prompt
-RUN az config set extension.use_dynamic_install=yes_without_prompt
 
 # setup container user equal to host user
 RUN groupadd --gid ${DockerGID} ${DockerUSER} && \ 
