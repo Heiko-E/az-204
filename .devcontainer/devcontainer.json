@@ -1,7 +1,8 @@
 {
   "name": "Azure Functions (Node.js)",
   "dockerComposeFile": "docker-compose.yml",
-  "service": "app",
+  "service": "azure_cli",
+  "initializeCommand": "${localWorkspaceFolder}/.devcontainer/initialize-command.sh",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "forwardPorts": [
     7071,

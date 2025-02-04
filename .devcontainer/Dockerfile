@@ -1,13 +1,30 @@
-#FROM mcr.microsoft.com/azure-cli:2.62.0-cbl-mariner2.0
-#FROM mcr.microsoft.com/devcontainers/javascript-node:1-20-bookworm
-FROM mcr.microsoft.com/azure-cli
+ARG DockerimageInheritFrom
+FROM $DockerimageInheritFrom as base_container
 
-RUN apt-get update && apt-get install -y \
+ARG DockerUSER=${CONTAINER_USER}
+ARG DockerUID=${CONTAINER_UID}
+ARG DockerGID=${CONTAINER_GID}
+ARG DockerPW=docker
+
+RUN apt-get update 
+RUN apt-get install -y \
     curl \
+    zip \
+    tree \
+    wget \
     git \
+    make \
+    musl-dev \
+    libffi-dev \
+    openssl \
+    libssl-dev \
+    cargo \
+    python3-pip \
+    python3-dev \
     npm \
-    node \
     nodejs
+
+RUN pip install --upgrade pip && pip install azure-cli
 
 RUN curl -sSL -O https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
@@ -35,9 +52,23 @@ RUN nvm install 16.15.0 \
 RUN  npx @angular/cli@latest analytics off \
     && npm i -g @angular/cli
 
+# Installing K3D for local Kubernetes development
+RUN curl -s "https://raw.githubusercontent.com/rancher/k3d/main/install.sh" | sudo bash
+
 # Kubernetes CLI
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
     && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # Install Azure CLI Extensions without prompt
 RUN az config set extension.use_dynamic_install=yes_without_prompt
+
+# setup container user equal to host user
+RUN groupadd --gid ${DockerGID} ${DockerUSER} && \ 
+    # Remark: it is important to use '--no-log-init'.
+    # without, long user-ids (e.g. in osd) will cause docker crash and to fill up all disk space
+    useradd --no-log-init --create-home ${DockerUSER} --uid ${DockerUID} --gid ${DockerGID} && \
+    echo "${DockerUSER}:${DockerPW}" | chpasswd && \
+    usermod -aG sudo ${DockerUSER}
+
+USER ${DockerUID}:${DockerGID}
+WORKDIR /home/$DockerUSER

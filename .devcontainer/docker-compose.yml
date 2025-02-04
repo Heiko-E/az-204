@@ -1,13 +1,36 @@
 services:
-  app:
+  azure_cli:
+    image: az400
+    #platform: linux/amd64
     build:
+      target: base_container
       context: .
       dockerfile: Dockerfile
-    platform: linux/amd64
+      args:
+        DockerimageInheritFrom: ubuntu:20.04
+        DockerUSER: ${CONTAINER_USER}
+        DockerUID: ${CONTAINER_UID}
+        DockerGID: ${CONTAINER_GID}
+      network: host # be sure that in your host the proxy is running
+    network_mode: bridge
+    #network_mode: service:azurite
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    tty: true
+    privileged: true
     volumes:
-      - ../..:/workspaces:cached
-    command: sleep infinity
-    network_mode: service:azurite
+      - type: bind
+        source: .
+        target: /ROOT_DIR
+      - type: bind
+        source: ${HOME}/.gitconfig
+        target: ${HOME}/.gitconfig
+      - type: bind
+        source: ${HOME}/mycredentials
+        target: ${HOME}/mycredentials
 
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite
