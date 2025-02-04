@@ -15,7 +15,7 @@ else
 	echo "mycredentials file already exists under /home/$(whoami)"
 fi
 
-env_path="$repo_root/.env"
+env_path="$repo_root/.devcontainer/.env"
 SOURCE_COMMAND="source $env_path"
 touch "$env_path"
 ## Update configuration file

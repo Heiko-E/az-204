@@ -6,8 +6,11 @@ ARG DockerUID=${CONTAINER_UID}
 ARG DockerGID=${CONTAINER_GID}
 ARG DockerPW=docker
 
-RUN apt-get update 
-RUN apt-get install -y \
+# ENV HTTP_PROXY http://127.0.0.1:3128
+# ENV HTTPS_PROXY http://127.0.0.1:3128
+
+RUN apt-get update
+RUN apt-get install -y\
     curl \
     zip \
     tree \
@@ -17,24 +20,38 @@ RUN apt-get install -y \
     musl-dev \
     libffi-dev \
     openssl \
+    gnupg \
+    lsb-release \
     libssl-dev \
+    apt-get install -y \
+    ca-certificates \
+    apt-transport-https \
     cargo \
     python3-pip \
     python3-dev \
     npm \
-    nodejs
+    node.js 
 
-RUN pip install --upgrade pip && pip install azure-cli
+# Download and install the Microsoft signing key
+# RUN curl -sLS https://packages.microsoft.com/keys/microsoft.asc | \
+#     gpg --dearmor | \
+#     tee /usr/share/keyrings/microsoft.gpg > /dev/null \
+#     chmod go+r /usr/share/keyrings/microsoft.gpg
 
+# Add Linux Software Repository for Microsoft Products
 RUN curl -sSL -O https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
     && rm packages-microsoft-prod.deb
 
-# dotnet
-RUN apt-get update && apt-get install -y \
-    dotnet-runtime-8.0 \
+# Azure CLI
+RUN apt-get update && apt-get install -y --fix-missing \
+    azure-cli \
     dotnet-runtime-8.0
 
+# Setting REQUESTS_CA_BUNDLE environment variable for az login command behind a proxy
+RUN export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
+# .NET
 RUN dotnet tool install -g Microsoft.dotnet-httprepl \ 
     && dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
 
@@ -49,7 +66,7 @@ RUN nvm install 16.15.0 \
     && npm install -g azurite
 
 # Install Angular
-RUN  npx @angular/cli@latest analytics off \
+RUN npx @angular/cli@latest analytics off \
     && npm i -g @angular/cli
 
 # Installing K3D for local Kubernetes development
