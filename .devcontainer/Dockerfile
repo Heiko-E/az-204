@@ -6,8 +6,9 @@ ARG DockerUID=${CONTAINER_UID}
 ARG DockerGID=${CONTAINER_GID}
 ARG DockerPW=docker
 ARG Language=en_US
-ARG TimeZone=CET
-#en_US de_DE
+
+# ENV HTTP_PROXY=http://127.0.0.1:3128
+# ENV HTTPS_PROXY=http://127.0.0.1:3128
 
 # pre configure tzdata
 RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && \
@@ -92,17 +93,17 @@ RUN curl -s "https://raw.githubusercontent.com/rancher/k3d/main/install.sh" | ba
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
     && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-# setup container user equal to host user
+# Locale support
+USER root
+RUN localedef -i ${Language} -f UTF-8 ${Language}.UTF-8
+RUN echo "LANG=\"${Language}.UTF-8\"" > /etc/locale.conf
+
+# Setup container user equal to host user
 RUN groupadd --gid ${DockerGID} ${DockerUSER} && \ 
     # Remark: it is important to use '--no-log-init'.
     useradd --no-log-init --create-home ${DockerUSER} --uid ${DockerUID} --gid ${DockerGID} && \
     echo "${DockerUSER}:${DockerPW}" | chpasswd && \
     usermod -aG sudo ${DockerUSER}
-
-# Locale support
-USER root
-RUN localedef -i ${Language} -f UTF-8 ${Language}.UTF-8
-RUN echo "LANG=\"${Language}.UTF-8\"" > /etc/locale.conf
 
 USER ${DockerUID}:${DockerGID}
 WORKDIR /home/$DockerUSER
