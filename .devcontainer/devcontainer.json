@@ -3,24 +3,28 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "azure_cli",
   "initializeCommand": "${localWorkspaceFolder}/.devcontainer/initialize-command.sh",
-  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "workspaceFolder": "/ROOT_DIR",
   "forwardPorts": [
-    7071,
-    10000,
-    10001,
-    10002
+    7071, // Azure Functions
+    10000, // Azurite
+    10001, // Azurite
+    10002 // Azurite
   ],
   "otherPortsAttributes": {
     "onAutoForward": "ignore"
   },
   "features": {
     "ghcr.io/devcontainers/features/azure-cli:1": {},
-    "ghcr.io/jlaundry/devcontainer-features/azure-functions-core-tools:1": {},
+    //"ghcr.io/jlaundry/devcontainer-features/azure-functions-core-tools:1": {} error on buid
     "ghcr.io/devcontainers/features/dotnet:2": {},
-    "ghcr.io/devcontainers/features/python:1": {}
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers/features/git:1": {}
   },
   "customizations": {
     "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
       "extensions": [
         "ms-python.python",
         "ms-python.debugpy",
@@ -56,7 +60,6 @@
         "formulahendry.auto-rename-tag",
         "formulahendry.dotnet-test-explorer",
         "formulahendry.github-actions",
-        "Fudge.auto-using",
         "gimenete.github-linker",
         "GitHub.vscode-pull-request-github",
         "Gruntfuggly.todo-tree",
@@ -93,11 +96,9 @@
         "ms-vscode-remote.remote-ssh-edit",
         "ms-vscode-remote.remote-wsl",
         "ms-vscode-remote.vscode-remote-extensionpack",
-        "ms-vscode.azure-account",
         "ms-vscode.azurecli",
         "ms-vscode.powershell",
         "ms-vscode.vscode-node-azure-pack",
-        "ms-vscode.vscode-typescript-tslint-plugin",
         "ms-vsonline.vsonline",
         "msazurermtools.azurerm-vscode-tools",
         "msjsdiag.debugger-for-chrome",
@@ -110,7 +111,6 @@
         "redhat.vscode-yaml",
         "ritwickdey.LiveServer",
         "samcogan.arm-snippets",
-        "Tyriar.shell-launcher",
         "vector-of-bool.gitflow",
         "vit-m.template-strings",
         "vscoss.vscode-ansible",
@@ -118,7 +118,8 @@
         "xabikos.JasmineSnippets",
         "xabikos.JavaScriptSnippets",
         "yatki.vscode-surround",
-        "Zignd.html-css-class-completion"
+        "Zignd.html-css-class-completion",
+        "Azurite.azurite"
       ]
     }
   }

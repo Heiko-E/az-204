@@ -23,7 +23,7 @@ services:
     privileged: true
     volumes:
       - type: bind
-        source: .
+        source: ..
         target: /ROOT_DIR
       - type: bind
         source: ${HOME}/.gitconfig

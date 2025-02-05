@@ -5,6 +5,9 @@ ARG DockerUSER=${CONTAINER_USER}
 ARG DockerUID=${CONTAINER_UID}
 ARG DockerGID=${CONTAINER_GID}
 ARG DockerPW=docker
+ARG Language=en_US
+ARG TimeZone=CET
+#en_US de_DE
 
 # pre configure tzdata
 RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && \
@@ -18,7 +21,8 @@ RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && \
 #     }
 # }
 
-RUN apt-get update && apt-get install -y\
+RUN apt-get update && apt-get install -y \
+    locales \
     curl \
     zip \
     tree \
@@ -38,6 +42,8 @@ RUN apt-get update && apt-get install -y\
     python3-dev \
     npm \
     node.js 
+
+RUN pip install pre-commit
 
 # Download and install the Microsoft signing key
 # RUN curl -sLS https://packages.microsoft.com/keys/microsoft.asc | \
@@ -89,10 +95,20 @@ RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/s
 # setup container user equal to host user
 RUN groupadd --gid ${DockerGID} ${DockerUSER} && \ 
     # Remark: it is important to use '--no-log-init'.
-    # without, long user-ids (e.g. in osd) will cause docker crash and to fill up all disk space
     useradd --no-log-init --create-home ${DockerUSER} --uid ${DockerUID} --gid ${DockerGID} && \
     echo "${DockerUSER}:${DockerPW}" | chpasswd && \
     usermod -aG sudo ${DockerUSER}
 
+# Locale support
+USER root
+RUN localedef -i ${Language} -f UTF-8 ${Language}.UTF-8
+RUN echo "LANG=\"${Language}.UTF-8\"" > /etc/locale.conf
+
 USER ${DockerUID}:${DockerGID}
 WORKDIR /home/$DockerUSER
+
+ENV PYTHONPATH=$PYTHONPATH:/ROOT_DIR
+ENV TERM=xterm-256color
+
+ENTRYPOINT ["/bin/bash", "-il", "-c"]
+CMD ["/bin/bash", "-il"]
