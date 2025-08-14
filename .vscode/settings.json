@@ -55,5 +55,6 @@
   "dotnet.defaultSolution": "disable",
   "[dockerfile]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-docker"
-  }
+  },
+  "java.compile.nullAnalysis.mode": "disabled"
 }
